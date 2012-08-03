@@ -15,6 +15,7 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.guid(product.id)
         xml.sku(product.sku)
         xml.vendor_sku(product.vendor_sku)
+        xml.weight(product.weight)
 
         if product.vendor.present?
             xml.vendor(product.vendor.name)
