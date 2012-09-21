@@ -13,14 +13,14 @@ end
 
 group :test do
   gem 'autotest'
-  gem 'rspec-rails', '= 2.6.1'
+  gem 'rspec-rails', '~> 2.11.0'
   gem 'factory_girl'
   gem 'faker'
 end
 
 group :cucumber do
   gem 'cucumber-rails', '1.0.0'
-  gem 'database_cleaner', '= 0.6.7'
+  gem 'database_cleaner', '~> 0.8.0'
   gem 'nokogiri'
   gem 'capybara', '1.0.1'
 end
