@@ -7,7 +7,7 @@ An RSS link is automatically appended to the `<head>` tag in the `layouts/spree_
 Supported versions of Spree
 =========
 
-any version of Spree higher than 0.70.x 
+Spree 1.0.x
 
 Installation
 ===============
