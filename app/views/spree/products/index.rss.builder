@@ -1,4 +1,4 @@
-xml.instruct! :xml, :version=>"1.0" 
+xml.instruct! :xml, :version=>"1.0"
 xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
   xml.channel{
     xml.title("#{Spree::Config[:site_name]}")
@@ -9,12 +9,12 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
       xml.item do
         xml.title(product.name)
         xml.description((product.images.count > 0 ? link_to(image_tag(product.images.first.attachment.url(:product)), product_url(product)) : '') + simple_format(product.description))
-        xml.author(Spree::Config[:site_url])               
+        xml.author(Spree::Config[:site_url])
         xml.pubDate((product.available_on || product.created_at).strftime("%a, %d %b %Y %H:%M:%S %z"))
         xml.link(product_url(product))
         xml.guid(product.id)
         xml.sku(product.sku)
-        xml.vendor_sku(product.vendor_sku)
+#       xml.vendor_sku(product.vendor_sku)
         xml.weight(product.weight)
 
         if product.images.count > 0
