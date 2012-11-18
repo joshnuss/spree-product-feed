@@ -17,13 +17,10 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.vendor_sku(product.vendor_sku)
         xml.weight(product.weight)
 
-        if product.vendor.present?
-            xml.vendor(product.vendor.name)
-        end
+        xml.vendor(product.vendor.present? ? product.vendor.name : '')
 
-        if product.images.count > 0
-            xml.tag!('g:image_link', product.images.first.attachment.url(:large))
-        end
+        xml.tag!('g:image_link', 
+            product.images.count > 0 ? product.images.first.attachment.url(:large) : '')
 
         xml.tag!('g:price', product.price)
         xml.tag!('g:condition', 'new')
