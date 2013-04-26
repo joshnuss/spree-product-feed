@@ -7,6 +7,8 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
     xml.language('en-us')
     @products.each do |product|
       title = "#{product.brand.nil? ? '' : product.brand.name} #{product.name}"
+      product_type = (product.taxons.first.ancestors.map{|t| t.name} << product.taxons.first.name).join(" > ")
+
       xml.item do
         xml.title(title)
         xml.description((product.images.count > 0 ? link_to(image_tag(product.images.first.attachment.url(:product)), product_url(product)) : '') + simple_format(product.description))
@@ -29,7 +31,7 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.tag!('g:id', product.id)
         xml.tag!('g:availability', product.count_on_hand > 0 ? 'in stock' : 'out of stock')
         xml.tag!('g:brand', product.brand.nil? ? '' : product.brand.name)
-        xml.tag!('g:product_type', product.primary_category.try(:name))
+        xml.tag!('g:product_type', product_type)
       end
     end
   }
