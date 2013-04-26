@@ -7,7 +7,9 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
     xml.language('en-us')
     @products.each do |product|
       title = "#{product.brand.nil? ? '' : product.brand.name} #{product.name}"
-      product_type = (product.taxons.first.ancestors.map{|t| t.name} << product.taxons.first.name).join(" > ")
+      product_type = ''
+      product_type = (product.taxons.first.ancestors.map{|t| t.name} << product.taxons.first.name).join(" > ") if product.taxons.any?
+
 
       xml.item do
         xml.title(title)
