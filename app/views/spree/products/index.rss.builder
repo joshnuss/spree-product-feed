@@ -6,8 +6,9 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
     xml.description("Find out about new products first! You'll always be in the know when new products become available")
     xml.language('en-us')
     @products.each do |product|
+      title = "#{product.brand.nil? ? '' : product.brand.name} #{product.name}"
       xml.item do
-        xml.title(product.name)
+        xml.title(title)
         xml.description((product.images.count > 0 ? link_to(image_tag(product.images.first.attachment.url(:product)), product_url(product)) : '') + simple_format(product.description))
         xml.author(Spree::Config[:site_url])               
         xml.pubDate((product.available_on || product.created_at).strftime("%a, %d %b %Y %H:%M:%S %z"))
