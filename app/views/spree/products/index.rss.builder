@@ -18,8 +18,8 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.pubDate((product.available_on || product.created_at).strftime("%a, %d %b %Y %H:%M:%S %z"))
         xml.link(product_url(product))
         xml.guid(product.id)
-        xml.sku(product.sku)
-        xml.vendor_sku(product.vendor_sku)
+        xml.sku(product.sku.strip)
+        xml.vendor_sku(product.vendor_sku.strip)
         xml.weight(product.weight)
         xml.shipping_weight(product.shipping_weight.to_f)
 
