@@ -22,7 +22,7 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.vendor_sku(product.vendor_sku.strip)
         xml.weight(product.weight)
         xml.shipping_weight(product.shipping_weight.to_f)
-        xml.upc(product.upc.try(:strip))
+        xml.gtin(product.upc.try(:strip))
 
         xml.vendor(product.vendor.present? ? product.vendor.name : '')
 
