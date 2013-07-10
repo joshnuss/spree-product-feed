@@ -35,8 +35,11 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.tag!('g:brand', product.brand.nil? ? '' : product.brand.name)
         xml.tag!('g:product_type', product_type)
 
-        if product.upc.nil? xml.tag!('g.identifier_exists', 'FALSE')
-        else xml.tag!('g:gtin', product.upc)
+        if product.upc.nil? 
+          xml.tag!('g.identifier_exists', 'FALSE')
+        else 
+          xml.tag!('g:gtin', product.upc)
+        end
       end
     end
   }
