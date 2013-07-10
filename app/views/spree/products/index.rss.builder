@@ -22,7 +22,6 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.vendor_sku(product.vendor_sku.strip)
         xml.weight(product.weight)
         xml.shipping_weight(product.shipping_weight.to_f)
-        xml.gtin(product.upc.try(:strip))
 
         xml.vendor(product.vendor.present? ? product.vendor.name : '')
 
@@ -35,6 +34,9 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.tag!('g:availability', product.count_on_hand > 0 ? 'in stock' : 'out of stock')
         xml.tag!('g:brand', product.brand.nil? ? '' : product.brand.name)
         xml.tag!('g:product_type', product_type)
+
+        if product.upc.nil? xml.tag!('g.identifier_exists', 'FALSE')
+        else xml.tag!('g:gtin', product.upc)
       end
     end
   }
