@@ -7,13 +7,14 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
     xml.language('en-us')
     @products.each do |product|
       title = "#{product.brand.nil? ? '' : product.brand.name} #{product.name}"
-      product_type = ''
-      product_type = (product.taxons.first.ancestors.map{|t| t.name} << product.taxons.first.name).join(" > ") if product.taxons.any?
+      # product_type = ''
+      # product_type = (product.taxons.first.ancestors.map{|t| t.name} << product.taxons.first.name).join(" > ") if product.taxons.any?
 
+      total_product_images = product.images.count
 
       xml.item do
         xml.title(title)
-        xml.description((product.images.count > 0 ? link_to(image_tag(product.images.first.attachment.url(:product)), product_url(product)) : '') + simple_format(product.description))
+        xml.description((total_product_images > 0 ? link_to(image_tag(product.images.first.attachment.url(:product)), product_url(product)) : '') + simple_format(product.description))
         xml.author(Spree::Config[:site_url])               
         xml.pubDate((product.available_on || product.created_at).strftime("%a, %d %b %Y %H:%M:%S %z"))
         xml.link(product_url(product))
@@ -25,15 +26,14 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
 
         xml.vendor(product.vendor.present? ? product.vendor.name : '')
 
-        xml.tag!('g:image_link', 
-            product.images.count > 0 ? product.images.first.attachment.url(:large) : '')
+        xml.tag!('g:image_link', total_product_images > 0 ? product.images.first.attachment.url(:large) : '')
 
         xml.tag!('g:price', product.price)
         xml.tag!('g:condition', 'new')
         xml.tag!('g:id', product.id)
         xml.tag!('g:availability', product.count_on_hand > 0 ? 'in stock' : 'out of stock')
         xml.tag!('g:brand', product.brand.nil? ? '' : product.brand.name)
-        xml.tag!('g:product_type', product_type)
+        xml.tag!('g:product_type', product.product_type)
 
         if product.upc.nil? 
           xml.tag!('g:identifier_exists', 'FALSE')
