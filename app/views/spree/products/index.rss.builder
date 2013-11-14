@@ -19,8 +19,8 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.pubDate((product.available_on || product.created_at).strftime("%a, %d %b %Y %H:%M:%S %z"))
         xml.link(product_url(product))
         xml.guid(product.id)
-        xml.sku(product.sku.strip)
-        xml.vendor_sku(product.vendor_sku.strip)
+        xml.sku(product.sku.to_s.strip)
+        xml.vendor_sku(product.vendor_sku.to_s.strip)
         xml.weight(product.weight)
         xml.shipping_weight(product.shipping_weight.to_f)
 
@@ -32,7 +32,7 @@ xml.rss(:version=>"2.0", "xmlns:g" => "http://base.google.com/ns/1.0"){
         xml.tag!('g:condition', 'new')
         xml.tag!('g:id', product.id)
         xml.tag!('g:availability', product.count_on_hand > 0 ? 'in stock' : 'out of stock')
-        xml.tag!('g:brand', product.brand.nil? ? '' : product.brand.name)
+        xml.tag!('g:brand', product.brand.to_s)
         xml.tag!('g:product_type', product_type)
 
         if product.upc.nil? 
